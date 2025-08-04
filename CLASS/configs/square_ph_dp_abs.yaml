@@ -47,7 +47,7 @@ policy:
   action_dim: ${action_dim}
   obs_horizon: ${obs_horizon}
   pred_horizon: ${pred_horizon}
-  vision_model: r3m
+  vision_model: imn
   frozen_encoder: false
   spatial_softmax: true
   num_kp: 0
