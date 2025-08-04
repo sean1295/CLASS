@@ -97,53 +97,6 @@ class SpatialBackbone(nn.Module):
         """
         return self.backbone(x)
 
-class SpatialSoftmax(nn.Module):
-    """
-    Spatial Soft Argmax operation described in "Deep Spatial Autoencoders for Visuomotor Learning" by Finn et al.
-    (https://huggingface.co/papers/1509.06113). A minimal port of the robomimic implementation.
-    """
-    def __init__(self, input_shape, num_kp=None):
-        """
-        Args:
-            input_shape (list): (C, H, W) input feature map shape.
-            num_kp (int): number of keypoints in output. If None, output will have the same number of channels as input.
-        """
-        super().__init__()
-
-        assert len(input_shape) == 3
-        self._in_c, self._in_h, self._in_w = input_shape
-
-        if num_kp is not None:
-            self.nets = torch.nn.Conv2d(self._in_c, num_kp, kernel_size=1)
-            self._out_c = num_kp
-        else:
-            self.nets = None
-            self._out_c = self._in_c
-
-        pos_x, pos_y = np.meshgrid(np.linspace(-1.0, 1.0, self._in_w), np.linspace(-1.0, 1.0, self._in_h))
-        pos_x = torch.from_numpy(pos_x.reshape(self._in_h * self._in_w, 1)).float()
-        pos_y = torch.from_numpy(pos_y.reshape(self._in_h * self._in_w, 1)).float()
-        self.register_buffer("pos_grid", torch.cat([pos_x, pos_y], dim=1))
-
-    def forward(self, features: Tensor) -> Tensor:
-        """
-        Args:
-            features: (B, C, H, W) input feature maps.
-        Returns:
-            (B, K * 2) flattened image-space coordinates of keypoints.
-        """
-        if self.nets is not None:
-            features = self.nets(features)
-
-        features = features.reshape(-1, self._in_h * self._in_w)
-        attention = F.softmax(features, dim=-1)
-        
-        expected_xy = attention @ self.pos_grid
-        
-        feature_keypoints = expected_xy.view(-1, self._out_c * 2)
-
-        return feature_keypoints
-
 
 class SpatialSoftmax(nn.Module):
     """
@@ -311,15 +264,7 @@ class VisionEncoders(nn.Module):
             from torchvision.models import resnet18, ResNet18_Weights
             model = resnet18(weights=ResNet18_Weights.IMAGENET1K_V1)
         elif vision_model == "dino":
-            # model = torch.hub.load('facebookresearch/dinov2', 'dinov2_vits14', verbose=False)
             model = torch.hub.load('facebookresearch/dino:main', 'dino_resnet50', verbose=False)
-        elif vision_model == 'clip':
-            try:
-                import clip
-            except ImportError:
-                raise ImportError("CLIP not found. Please install it with `pip install git+https://github.com/openai/CLIP.git`")
-            model, _ = clip.load('RN50', device="cpu")
-            model = model.visual
         else:
             raise ValueError(f"Vision model '{vision_model}' not recognized.")
         
@@ -331,15 +276,7 @@ class VisionEncoders(nn.Module):
         feature_extractor = SpatialBackbone(model)
         
         # 4. Determine the final architecture (encoder pipeline)
-        if False: #self.vision_model_name == 'clip':
-            if spatial_softmax:
-                raise ValueError(
-                    "Cannot use `spatial_softmax=True` with naive `vision_model='clip'` output. "
-                    "Spatial Softmax requires a spatial feature map, but naive CLIP returns a flat vector."
-                )
-            # For naive CLIP, the feature_extractor already returns a flat vector.
-            encoder_pipeline = feature_extractor
-        elif spatial_softmax:
+        if spatial_softmax:
             with torch.no_grad():
                 dummy = torch.zeros(1, 3, 224, 224)
                 feature_shape = feature_extractor(dummy).shape[1:]

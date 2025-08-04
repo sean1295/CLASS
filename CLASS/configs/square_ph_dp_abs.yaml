@@ -7,7 +7,7 @@ dataset_dir: /scratch/dcs3zc/class/robomimic
 ori_dataset_path: ${dataset_dir}/low_dim_v141.hdf5
 base_dir: ${dataset_dir}/${env_name}_${action_space}_${dist_metric}_${dist_horizon}
 save_model: true
-dynamic_mode: false # Set to true if you want dynamic camera placements/movements
+dynamic_mode: true # Set to true if you want dynamic camera placements/movements
 
 # ========== CLASS-SPECIFIC CONFIG ==========
 dist_metric: dtw
@@ -47,7 +47,7 @@ policy:
   action_dim: ${action_dim}
   obs_horizon: ${obs_horizon}
   pred_horizon: ${pred_horizon}
-  vision_model: imn
+  vision_model: r3m
   frozen_encoder: false
   spatial_softmax: true
   num_kp: 0
