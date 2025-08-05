@@ -16,7 +16,7 @@
 
 We additionally provide the implemention of CLASS using a [forked version](https://github.com/sean1295-robotics/CLASS_robomimic) of robomimic. This implementation currently only supports homogeneous Square task. Use the original implementation if you want to simulate dynamic camera settings. Note that the forked version uses a different Robomimic version (v0.5) from the original implementation (v0.4).
 
-## Installation☑️
+## Installation
 ### Clone this repo
 ```
 git clone https://github.com/sean1295/CLASS.git
@@ -41,7 +41,7 @@ pip install -e .
 cd ..
 ```
 
-## Prepare Dataset📝
+## Prepare Dataset
 ### Generate Heterogeneous Dataset
 Prior to generating heterogeneous datasets, you need to first download robomimic/mimicgen hdf5 datasets. See [robomimic](https://robomimic.github.io/docs/v0.4/datasets/robomimic_v0.1.html) (robomimic) and [mimicgen](https://mimicgen.github.io/docs/datasets/mimicgen_corl_2023.html) documentations for the instructions. Download --tasks square --dataset_types ph from robomimic and -dataset_type core --tasks stack_three_d0 from mimicgen. 
 
@@ -56,7 +56,7 @@ Run the following command to precompute pairwise DTW distances between the actio
 python CLASS/scripts/precompute.py --config_name square_ph_dp_abs
 ```
 
-## Train🔥️🔥️
+## Train
 Set up wandb from terminal with `wandb login`
 ### CLASS Pre-training
 You can pretrain the policy using the following command:
