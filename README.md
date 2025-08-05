@@ -7,7 +7,7 @@
  
 ![CLASS](./media/shiba.gif)
 
-[**Robomimic Fork**](#Robomimic-Fork) | [**Installation ☑️**](#Installation) | [**## Prepare Dataset📝**](#Prepare-Dataset) | [**## Train️‍🔥️🔥️🔥️**](#train) | [**Project Website**](https://class-robot.github.io/)
+[**Robomimic Fork**](#Robomimic-Fork) | [**Installation**](#Installation) | [**Prepare Dataset**](#Prepare-Dataset) | [**Train️‍**](#train) | [**Project Website**](https://class-robot.github.io/)
 ![CLASS](./media/overview.gif)
 
 
