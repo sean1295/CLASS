@@ -1,7 +1,15 @@
 # CLASS: Contrastive Learning via Action Sequence Supervision for Robot Manipulation
 
+[![arXiv](https://img.shields.io/badge/arXiv-2508.01600-df2a2a.svg?style=for-the-badge)](https://arxiv.org/abs/2406.09246)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.3.0-EE4C2C.svg?style=for-the-badge&logo=pytorch)](https://pytorch.org/get-started/locally/)
+[![Python](https://img.shields.io/badge/python-3.10-blue?style=for-the-badge)](https://www.python.org)
+[![License](https://img.shields.io/github/license/TRI-ML/prismatic-vlms?style=for-the-badge)](LICENSE)
+ 
 ![CLASS](./media/shiba.gif)
+
+[**Robomimic Fork**](#Robomimic-Fork) | [**Installation ☑️**](#Installation) | [**## Prepare Dataset📝**](#Prepare-Dataset) | [**## Train️‍🔥️🔥️🔥️**](#train) | [**Project Website**](https://class-robot.github.io/)
 ![CLASS](./media/overview.gif)
+
 
 
 ## Robomimic Fork
@@ -15,7 +23,7 @@ git clone https://github.com/sean1295/CLASS.git
 cd CLASS
 ```
 
-### Installing using conda🗜
+### Installing using conda
 
 You can install the vitual conda environment using the following command:
 ```

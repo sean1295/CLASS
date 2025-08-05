@@ -95,7 +95,7 @@ policy:
 # ========== TRAINING ==========
 pretrain:
   num_epoch: 10
-  train_bs: 128
+  train_bs: 160
   train_steps: null
   eval_steps: null
 
