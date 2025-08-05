@@ -1,6 +1,6 @@
 # CLASS: Contrastive Learning via Action Sequence Supervision for Robot Manipulation
 
-[![arXiv](https://img.shields.io/badge/arXiv-2508.01600-df2a2a.svg?style=for-the-badge)](https://arxiv.org/abs/2406.09246)
+[![arXiv](https://img.shields.io/badge/arXiv-2508.01600-df2a2a.svg?style=for-the-badge)](https://arxiv.org/abs/2508.01600)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.3.0-EE4C2C.svg?style=for-the-badge&logo=pytorch)](https://pytorch.org/get-started/locally/)
 [![Python](https://img.shields.io/badge/python-3.10-blue?style=for-the-badge)](https://www.python.org)
 [![License](https://img.shields.io/github/license/TRI-ML/prismatic-vlms?style=for-the-badge)](LICENSE)
