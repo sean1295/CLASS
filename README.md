@@ -41,7 +41,7 @@ pip install -e .
 cd ..
 ```
 
-## Prepare Dataset
+## Prepare Dataset📝
 ### Generate Heterogeneous Dataset
 Prior to generating heterogeneous datasets, you need to first download robomimic/mimicgen hdf5 datasets. See [robomimic](https://robomimic.github.io/docs/v0.4/datasets/robomimic_v0.1.html) (robomimic) and [mimicgen](https://mimicgen.github.io/docs/datasets/mimicgen_corl_2023.html) documentations for the instructions. Download --tasks square --dataset_types ph from robomimic and -dataset_type core --tasks stack_three_d0 from mimicgen. 
 
@@ -58,7 +58,7 @@ python CLASS/scripts/precompute.py --config_name square_ph_dp_abs
 
 ## Train
 Set up wandb from terminal with `wandb login`
-### CLASS Pre-training
+### CLASS Pre-training🔥️🔥️
 You can pretrain the policy using the following command:
 ```
 python CLASS/scripts/pretrain.py --config_name square_ph_dp_abs
