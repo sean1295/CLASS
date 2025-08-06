@@ -43,9 +43,14 @@ cd ..
 
 ## Prepare Dataset📝
 ### Generate Heterogeneous Dataset
-Prior to generating heterogeneous datasets, you need to first download robomimic/mimicgen hdf5 datasets. See [robomimic](https://robomimic.github.io/docs/v0.4/datasets/robomimic_v0.1.html) and [mimicgen](https://mimicgen.github.io/docs/datasets/mimicgen_corl_2023.html) documentations for the instructions. Download --tasks square --dataset_types ph from robomimic and -dataset_type core --tasks stack_three_d0 from mimicgen. 
+Prior to generating heterogeneous datasets, you need to first download robomimic/mimicgen hdf5 datasets. See [robomimic](https://robomimic.github.io/docs/v0.4/datasets/robomimic_v0.1.html) and [mimicgen](https://mimicgen.github.io/docs/datasets/mimicgen_corl_2023.html) documentations for the instructions. It should look like this:
+```
+python /path/to/robomimic/scripts/download_datasets.py --tasks square --dataset_types ph --hdf5_types low_dim --download_dir /path/to/dataset
 
-After the datasets are downloaded, move each dataset to dataset_dir from the config file (e.g., configs/square_ph_dp_abs). The location of the downloaded dataset should match the ori_dataset_path value from the config file. Make sure to modify dataset_dir value, which is the directory where the transformed dataset will be stored. Once complete, run
+python /path/to/mimicgen/scripts/download_datasets.py --tasks stack_three_d0 --dataset_type core --download_dir /path/to/dataset
+```
+
+The location of the downloaded datasets should match the ori_dataset_path value from the config files (e.g., configs/square_ph_dp_abs). Make sure to modify /path/to/dataset, which is the directory where the original and transformed datasets will be stored. Once complete, run
 ```
 python CLASS/scripts/generate_dataset.py --config_name square_ph_dp_abs
 ```
