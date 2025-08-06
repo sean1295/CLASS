@@ -50,7 +50,7 @@ python /path/to/robomimic/scripts/download_datasets.py --tasks square --dataset_
 python /path/to/mimicgen/scripts/download_datasets.py --tasks stack_three_d0 --dataset_type core --download_dir /path/to/dataset
 ```
 
-The location of the downloaded datasets should match the ori_dataset_path value from the config files (e.g., configs/square_ph_dp_abs). Make sure to modify /path/to/dataset, which is the directory where the original and transformed datasets will be stored. Once complete, run
+Make sure to modify /path/to/dataset for the commands above and dataset_dir value in the config files (e.g., configs/square_ph_dp_abs), which is the directory where the original and transformed datasets will be stored. Once complete, run
 ```
 python CLASS/scripts/generate_dataset.py --config_name square_ph_dp_abs
 ```
