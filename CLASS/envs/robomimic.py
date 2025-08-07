@@ -52,7 +52,8 @@ def get_env_meta(cfg):
     env_meta["env_kwargs"]["camera_names"] = camera_names
     env_meta["env_kwargs"]["camera_heights"] = 256
     env_meta["env_kwargs"]["camera_widths"] = 256
-    env_meta["env_kwargs"]["controller_configs"]["control_delta"] = False
+    if "abs" in cfg.action_space:
+        env_meta["env_kwargs"]["controller_configs"]["control_delta"] = False
 
     if "joint_pos" in cfg.action_space:
         env_meta["env_kwargs"]["controller_configs"]["type"] = "JOINT_POSITION"
@@ -140,7 +141,7 @@ class RobomimicTorchWrapper(Wrapper):
                     pos += pos_obs
                     quat = roma.quat_composition([quat_obs.float(), quat.float()])
 
-                _action = torch.cat((pos, quat, grip), dim=-1)
+                processed_action_per_robot = torch.cat((pos, quat, grip), dim=-1)
             else:
                 joint = action_seq[..., 8 * n + 0 : 8 * n + 7]
                 grip = action_seq[..., 8 * n + 7 : 8 * n + 8]
@@ -156,9 +157,9 @@ class RobomimicTorchWrapper(Wrapper):
                             joint_obs = joint_obs.unsqueeze(0)
                     joint += joint_obs
 
-                _action = torch.cat((joint, grip), dim=-1)
+                processed_action_per_robot = torch.cat((joint, grip), dim=-1)
 
-            processed_action_sequence.append(_action)
+            processed_action_sequence.append(processed_action_per_robot)
 
         return torch.cat(processed_action_sequence, dim=-1)
 
