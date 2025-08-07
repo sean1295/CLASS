@@ -25,5 +25,5 @@ roma==1.5.2.1
 open3d
 wandb
 pygame
-robosuite @ https://github.com/ARISE-Initiative/robosuite/archive/b9d8d3de5e3dfd1724f4a0e6555246c460407daa.tar.gz
+robosuite @ https://github.com/ARISE-Initiative/robosuite/archive/d83a9a76200381c833feda0e06e154c3c01f66bb.tar.gz
 robomimic @ https://github.com/pointW/robomimic/archive/8aad5b3caaaac9289b1504438a7f5d3a76d06c07.tar.gz
