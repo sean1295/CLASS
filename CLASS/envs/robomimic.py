@@ -52,8 +52,7 @@ def get_env_meta(cfg):
     env_meta["env_kwargs"]["camera_names"] = camera_names
     env_meta["env_kwargs"]["camera_heights"] = 256
     env_meta["env_kwargs"]["camera_widths"] = 256
-    if "abs" in cfg.action_space:
-        env_meta["env_kwargs"]["controller_configs"]["control_delta"] = False
+    env_meta["env_kwargs"]["controller_configs"]["control_delta"] = False
 
     if "joint_pos" in cfg.action_space:
         env_meta["env_kwargs"]["controller_configs"]["type"] = "JOINT_POSITION"
