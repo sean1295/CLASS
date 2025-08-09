@@ -1,18 +1,16 @@
 import warnings
 import sys
-
-warnings.showwarning = lambda *args, **kwargs: None
-sys.modules['warnings'].warn = lambda *args, **kwargs: None
-
 import os
 import argparse
 from hydra import initialize, compose
 
-from CLASS.runner.workspace_pretrain import Workspace
-
+warnings.showwarning = lambda *args, **kwargs: None
+sys.modules['warnings'].warn = lambda *args, **kwargs: None
 os.environ["MUJOCO_GL"] = "egl"
 os.environ["HYDRA_FULL_ERROR"] = "2"
-os.environ["WANDB_DIR"] = "/scratch/dcs3zc"
+
+from CLASS.runner.workspace_pretrain import Workspace
+
 
 def main():
     parser = argparse.ArgumentParser()
