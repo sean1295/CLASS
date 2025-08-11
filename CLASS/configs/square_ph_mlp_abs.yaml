@@ -15,7 +15,7 @@ dist_horizon: 16
 dtw_file_path: ${base_dir}/dists.pth
 dist_quantile: 0.025
 use_sparse: false
-temperature: 0.07
+temperature: 0.05
 
 # ========== OBS / ACTION STRUCTURE ==========
 obs_keys: [robot0_eef_pos, robot0_eef_quat, robot0_joint_pos, robot0_gripper_qpos, agentview_image]

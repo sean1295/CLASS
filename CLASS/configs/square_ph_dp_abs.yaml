@@ -3,7 +3,7 @@ env_name: robomimic_square
 device: cuda
 num_envs: 25
 max_episode_steps: 600
-dataset_dir: /scratch/dcs3zc/class/robomimic # Modify this to your dataset directory
+dataset_dir: /path/to/dataset # Modify this to your dataset directory
 ori_dataset_path: ${dataset_dir}/low_dim_v141.hdf5
 base_dir: ${dataset_dir}/${env_name}_${action_space}_${dist_metric}_${dist_horizon} # Directory to save the precomputed distances, policies, etc.
 save_model: true
@@ -90,7 +90,7 @@ policy:
     beta_start: 0.0001
     beta_end: 0.02
     beta_schedule: squaredcos_cap_v2
-    prediction_type: sample
+    prediction_type: epsilon
 
 # ========== TRAINING ==========
 pretrain:
