@@ -314,8 +314,6 @@ class RobomimicTorchWrapper(Wrapper):
                 [obs.copy()] * (policy.obs_horizon + latency),
                 maxlen=policy.obs_horizon + latency
             )
-            prev_indices = torch.tensor([-1] * nnn).to(self.device)
-            tolerance = 3
 
             while not done and t < max_episode_steps:
                 if pbar:
@@ -329,15 +327,7 @@ class RobomimicTorchWrapper(Wrapper):
                 indices, scores = retrieve_nearest_neighbors(
                     obs_latent, retrieval_latent, n=nnn, use_cossim=use_cossim
                 )
-                dists = scores[indices]
-
-                if all(prev_indices == indices):
-                    tolerance -= 1
-                else:
-                    tolerance = 3
-                if tolerance == 0:
-                    break
-                
+                dists = scores[indices]                
                 weights = F.softmax(-dists / temperature, dim=0)
                 
                 if option == 0:
@@ -363,7 +353,6 @@ class RobomimicTorchWrapper(Wrapper):
                         break
                 if done:
                     comp_times.append(t)                    
-                prev_indices = indices.clone()
 
         if render:
             imgs = np.stack(imgs, axis = 0)
