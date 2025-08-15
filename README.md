@@ -14,7 +14,7 @@
 
 ## Robomimic Fork
 
-We additionally provide the implemention of CLASS using a [forked version](https://github.com/sean1295-robotics/CLASS_robomimic) of robomimic. This implementation currently only supports homogeneous Square task. Use the original implementation if you want to simulate dynamic camera settings. Note that the forked version uses a different Robomimic version (v0.5) from the original implementation (v0.4).
+We additionally provide a separate implemention of CLASS using a [forked version](https://github.com/sean1295-robotics/CLASS_robomimic) of robomimic. This implementation natively only supports homogeneous Square task. Use the original implementation if you want to simulate dynamic camera settings. Note that the forked version uses a different Robomimic version (v0.5) from the original implementation (v0.3).
 
 ## Installation
 ### Clone this repo
@@ -50,7 +50,7 @@ python /path/to/robomimic/scripts/download_datasets.py --tasks square --dataset_
 python /path/to/mimicgen/scripts/download_datasets.py --tasks stack_three_d0 --dataset_type core --download_dir /path/to/dataset
 ```
 
-Make sure to modify /path/to/dataset for the commands above and dataset_dir value in the config files (e.g., configs/square_ph_dp_abs), which is the directory where the original and transformed datasets will be stored. Once complete, run
+Make sure to modify /path/to/dataset for the commands above and dataset_dir value in the config files (e.g., CLASS/configs/square_ph_dp_abs), which is the directory where the original and transformed datasets will be stored. Once complete, run
 ```
 python CLASS/scripts/generate_dataset.py --config_name square_ph_dp_abs
 ```
