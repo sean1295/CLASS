@@ -26,4 +26,4 @@ open3d
 wandb
 pygame
 robosuite @ https://github.com/ARISE-Initiative/robosuite/archive/d83a9a76200381c833feda0e06e154c3c01f66bb.tar.gz
-robomimic @ https://github.com/pointW/robomimic/archive/8aad5b3caaaac9289b1504438a7f5d3a76d06c07.tar.gz
+robomimic @ https://github.com/ARISE-Initiative/robomimic/archive/40e427a695a9f085d3fc0f70ffb0d687a10802c8.tar.gz
