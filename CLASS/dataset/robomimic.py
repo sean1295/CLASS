@@ -18,6 +18,7 @@ class BCRobomimicDataset(Dataset):
         device: str = "cpu",
         obs_horizon: int = 1,
         pred_horizon: int = 1,
+        normalize_action_per_timestep: bool = False
     ) -> None:
         self.obs_keys = obs_keys
         self.action_space = action_space
@@ -61,7 +62,10 @@ class BCRobomimicDataset(Dataset):
             if k == "action": 
                 action_data = self.generate_action_sequence()
                 if k not in self.normalizers:
-                    self.normalizers[k] = SafeLimitsNormalizer(action_data.flatten(end_dim=1))
+                    if normalize_action_per_timestep:
+                        self.normalizers[k] = SafeLimitsNormalizer(action_data)
+                    else:
+                        self.normalizers[k] = SafeLimitsNormalizer(action_data[:,0])
                 self.train_data[k] = action_data 
             else:
                 self.train_data[k] = self.train_data[k].to(self.device)

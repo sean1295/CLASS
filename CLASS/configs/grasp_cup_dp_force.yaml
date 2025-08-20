@@ -1,37 +1,27 @@
 # ========== TASK CONFIG ==========
-env_name: mimicgen_stack_three
+env_name: real
 device: cuda
 num_envs: 25
-max_episode_steps: 800
-dataset_dir: /scratch/dcs3zc/class/mimicgen # Modify this to your dataset directory
-ori_dataset_path: ${dataset_dir}/stack_three_d0.hdf5
-base_dir: ${dataset_dir}/${env_name}_${action_space}_${dist_metric}_${dist_horizon} # Directory to save the precomputed distances, policies, etc.
-save_model: true
-dynamic_mode: true # Set to true if you want dynamic camera placements/movements
-
-# ========== CLASS-SPECIFIC CONFIG ==========
-dist_metric: dtw
-dist_horizon: 16
-dtw_file_path: ${base_dir}/dists.pth
-dist_quantile: 0.01
-use_sparse: true # Set to true if your dataset is large
-temperature: 0.05
+max_episode_steps: 600
+dataset_dir: /standard/liverobotics/dataset_corl_workshop/grasp_cup
+image_latency_frame: 0
+load_file: ${dataset_dir}/step_20000.pth
 
 # ========== OBS / ACTION STRUCTURE ==========
-obs_keys: [robot0_eef_pos, robot0_eef_quat, robot0_joint_pos, robot0_gripper_qpos, agentview_image]
-proprio_dim: 16 # 3 (robot0_eef_pos) + 4 (robot0_eef_quat) + 7 (robot0_joint_pos) + 2 (robot0_gripper_qpos)
+obs_keys: [gripper_image, tactile]
+proprio_dim: 168
 latent_dim: 0
 obs_horizon: 1
 pred_horizon: 16
-action_horizon: 8
-action_space: rel_ee_pose
-action_dim: ${if:"'joint_pos' in '${action_space}'", 8, 10}
+action_horizon: 12
+action_space: action_pos
+action_dim: 9
 
 # ========== DATASET ==========
 dataset:
-  _target_: CLASS.dataset.robomimic.BCRobomimicDataset
-  dataset_path: ${dataset_dir}/dataset.zarr
-  num_demo: 1000
+  _target_: CLASS.dataset.real.BCRealWorldDataset
+  dataset_path: ${dataset_dir}/zarr
+  num_demo: 40
   obs_keys: ${obs_keys}
   action_space: ${action_space}
   obs_horizon: ${obs_horizon}
@@ -55,7 +45,7 @@ policy:
   device: ${device}
   num_inference_steps: 16
 
-  model:
+  model: 
     image_encoder:
       _target_: CLASS.model.vision.VisionEncoders
       vision_model: ${policy.vision_model}
@@ -63,14 +53,14 @@ policy:
       replace_norm: true
       spatial_softmax: ${policy.spatial_softmax}
       num_kp: ${policy.num_kp}
-      noise_std: 0.001
+      noise_std: 0.001 
       frozen: ${policy.frozen_encoder}
 
     proprio_encoder:
       _target_: CLASS.model.MLP.MLP # torch.nn.Linear
       in_features: ${policy.proprio_dim}
       hidden_features: 128
-      num_layers: 0
+      num_layers: -1
       out_features: ${policy.latent_dim}
 
     fusion_fn:
@@ -95,7 +85,7 @@ policy:
 
 # ========== TRAINING ==========
 pretrain:
-  num_epoch: 10
+  num_epoch: 50
   train_bs: 160
   train_steps: null
   eval_steps: null
@@ -104,40 +94,30 @@ pretrain:
     _target_: CLASS.util.optim.LARS
     lr: 0
     vision_lr: 0.4
+    weight_decay: 1e-6
 
   scheduler:
     name: cosine
     num_warmup_steps: null
 
 finetune:
-  enabled: false # Set to true if you want to fine-tune with pretrained weights
+  enabled: true # Set to true if you want to fine-tune with pretrained weights
   pretrain_policy_path: null # null if you want to use the latest trained model
-  num_epoch: ${if:"${finetune.enabled}", 20, 100} # CLASS pre-training enables training with fewer epochs
+  num_epoch: 500
   train_bs: 64
   train_steps: null
   eval_steps: null
 
   optim:
-    _target_: torch.optim.AdamW     
+    _target_: torch.optim.AdamW
     lr: 1e-4
     vision_lr: 1e-5
+    weight_decay: 1e-6
     fused: true
 
   scheduler:
     name: cosine
-    num_warmup_steps: 100
-
-# ========== EVALUATION ==========
-eval:
-  num_ep: 50 # Must be divisible by num_envs
-  seed: 100000
-  temperature: ${if:"${dynamic_mode}", 0.02, 0.01}  
-  nnn: 64
-  use_cossim: true
-  nonparam_horizon: 16
-  param_horizon: 12
-  render: true
-  option: 0
+    num_warmup_steps: 500
 
 # ========== LOGGING ==========
 wandb:

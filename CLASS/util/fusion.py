@@ -4,12 +4,12 @@ import torch.nn as nn
 
 class ConcatFusion(nn.Module):
     def forward(self, img, proprio):
-        if len(img) and len(proprio):
-            return torch.cat([img, proprio], dim=-1) 
-        elif len(img):
+        if proprio is None:
             return img
-        else:
+        if img is None:
             return proprio
+        return torch.cat([img, proprio], dim=-1) 
+
 
 
 class FiLM(nn.Module):

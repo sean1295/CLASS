@@ -62,7 +62,7 @@ class ConditionalResidualBlock1D(nn.Module):
             embed = embed.reshape(embed.shape[0], 2, self.out_channels, 1)
             scale = embed[:, 0, ...]
             bias = embed[:, 1, ...]
-            out = scale * out + bias
+            out = (1 + scale) * out + bias
         out = self.blocks[1](out)
         out = out + self.residual_conv(x)
         return out

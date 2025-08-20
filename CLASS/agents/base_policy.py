@@ -278,6 +278,8 @@ class Policy(ABC):
         # Normalize non-image keys
         for key in self.non_image_keys:
             if key in obs:
+                if "tactile" in key:
+                    obs[key] = obs[key].flatten(start_dim = -2)
                 processed_obs[key] = (
                     self.normalizers[key].normalize(obs[key].to(self.device)).float()
                 )
