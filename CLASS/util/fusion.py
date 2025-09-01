@@ -11,7 +11,6 @@ class ConcatFusion(nn.Module):
         return torch.cat([img, proprio], dim=-1) 
 
 
-
 class FiLM(nn.Module):
     def __init__(
         self, cond_dim, output_dim, append=False, hidden_dim=64, activation=nn.Mish()
