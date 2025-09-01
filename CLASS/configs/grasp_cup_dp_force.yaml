@@ -5,7 +5,7 @@ num_envs: 25
 max_episode_steps: 600
 dataset_dir: /standard/liverobotics/dataset_corl_workshop/grasp_cup
 image_latency_frame: 0
-load_file: ${dataset_dir}/step_20000.pth
+load_file: ${dataset_dir}/step_4999_action_force.pth
 
 # ========== OBS / ACTION STRUCTURE ==========
 obs_keys: [gripper_image, tactile]
@@ -14,7 +14,7 @@ latent_dim: 0
 obs_horizon: 1
 pred_horizon: 16
 action_horizon: 12
-action_space: action_pos
+action_space: action_force
 action_dim: 9
 
 # ========== DATASET ==========

@@ -5,7 +5,7 @@ num_envs: 25
 max_episode_steps: 600
 dataset_dir: /standard/liverobotics/dataset_corl_workshop/grasp_cup
 image_latency_frame: 0
-load_file: ${dataset_dir}/step_20000.pth
+load_file: ${dataset_dir}/step_4999_action_pos.pth
 
 # ========== OBS / ACTION STRUCTURE ==========
 obs_keys: [gripper_image]
